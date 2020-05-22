@@ -9,9 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@wdio/selenium-standalone-service": "^5.11.2",
     "codeceptjs": "^2.6.5",
     "codeceptjs-chai": "^1.1.1",
     "dotenv": "^8.2.0",
     "puppeteer": "^3.1.0"
+  },
+  "devDependencies": {
+    "@codeceptjs/mailslurp-helper": "^1.0.2"
   }
 }

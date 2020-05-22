@@ -16,8 +16,8 @@ module.exports = {
   },
 
   inputKeyword: function (keyword) {
+    I.clearField(this.searchBarInputField)
     I.fillField(this.searchBarInputField, keyword);
-    I.see(keyword, this.searchBarInputField);
   },
 
   submit: function () {

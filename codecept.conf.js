@@ -12,10 +12,29 @@ exports.config = {
       url: "https://www.amazon.com",
       show: true,
       windowSize: "1200x900",
-      waitForNavigation: "networkidle0",
+      waitForNavigation: ["domcontentloaded", "networkidle0"],
+      waitForTimeout: 5000,
+      pressKeyDelay: 30,
     },
+    // WebDriver: {
+    //   url: "https://www.amazon.com",
+    //   browser: "chrome",
+    //   restart: false,
+    //   smartWait: 5000,
+    //   windowSize: "1920x1680",
+    //   desiredCapabilities: {
+    //     chromeOptions: {
+    //       args: [/*"--headless",*/ "--disable-gpu", "--no-sandbox"],
+    //     },
+    //   },
+    // },
     ChaiWrapper: {
       require: "codeceptjs-chai",
+    },
+    MailSlurp: {
+      require: "@codeceptjs/mailslurp-helper",
+      apiKey:
+        "d944c88eb6bfa80faa26fa1c8bbf89f4c4da00b1a6004bc1238ab0e5346f1c5e",
     },
   },
   include: {
@@ -25,6 +44,7 @@ exports.config = {
     searchBoxFrag: "./tests/fragments/searchBox.js",
     searchResultFrag: "./tests/fragments/searchResult.js",
     filterOptionFrag: "./tests/fragments/filterOption.js",
+    sortOptionFrag: "./tests/fragments/sortOption.js",
     headerFrag: "./tests/fragments/header.js",
   },
   bootstrap: null,
@@ -36,6 +56,10 @@ exports.config = {
     },
     screenshotOnFail: {
       enabled: true,
+    },
+    wdio: {
+      enabled: true,
+      services: ["selenium-standalone"],
     },
   },
 };

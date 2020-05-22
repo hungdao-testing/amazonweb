@@ -7,9 +7,10 @@ module.exports = {
   accountOption: '#nav-tools [data-nav-role="signin"]',
   signInFlyOut: 'a[data-nav-ref="nav_signin"]',
 
-  openCategories: function () {
+  openCategories: function (category) {
     I.click(this.hamburgerIcon);
     I.seeTextEquals("SHOP BY CATEGORY", "#hmenu-content");
+    I.click(category);
   },
 
   goToSignIn: function () {
