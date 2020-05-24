@@ -38,7 +38,7 @@ exports.config = {
     sortOptionFrag: "./tests/fragments/sortOption.js",
     headerFrag: "./tests/fragments/header.js",
   },
-  bootstrap: null,
+  bootstrap: "./run_server.js",
   mocha: {},
   name: "amazon",
   plugins: {
@@ -47,6 +47,13 @@ exports.config = {
     },
     screenshotOnFail: {
       enabled: true,
+    },
+    allure: {
+      enabled: true,
+    },
+    stepByStepReport: {
+      enabled: false,
+      output: "./output",
     },
   },
 };
