@@ -1,21 +1,10 @@
 const fileManager = require("../utils/fileManage");
-Feature("Search");
+Feature("Search").tag("@search");
 
 Before((I, searchPage) => {
   I.amOnPage("/");
   searchPage.searchFor(data.keyword, data.department);
 });
-
-// let criteria = {
-//   keyword: "apple",
-//   department: "Books",
-//   filter: [
-//     {
-//       "Book Language": ["English"],
-//     },
-//   ],
-//   sortBy: "Publication Date",
-// };
 
 let data = fileManager.fetchDataFile("valid_search.json");
 
@@ -42,11 +31,11 @@ Scenario(
       I.assertEqual(iteminPageFinal, 16);
     }
   }
-);
+).tag("@maxItem");
 
 Scenario(
   "Verify user could sort by 'Publication Date'",
   async (I, searchPage) => {
     searchPage.sortByValue(data);
   }
-);
+).tag("@sort");

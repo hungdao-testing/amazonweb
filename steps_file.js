@@ -18,20 +18,20 @@ module.exports = function () {
       return false;
     },
 
-    login: async function (username, password) {
+    login: async function (email, password) {
       this.amOnPage("/");
       headerFrag.goToSignIn();
-      loginPage.inputEmail(username);
+      loginPage.inputEmail(email);
       let isEmailError = await this.catchError(emailErrorLoc);
       if (isEmailError) {
         this.say("There is an error in email page");
         return isEmailError;
       }
-      loginPage.inputPassword(password);
       if (!password) {
         this.say("Forgot entering password");
         return true;
       }
+      loginPage.inputPassword(password);
       this.waitForNavigation();
       let isCredentialError = await this.catchError(credentialErrorLoc);
       if (isCredentialError) {
