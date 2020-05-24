@@ -1,26 +1,26 @@
 const { I } = inject();
 
+let searchBarInputField = "#nav-search #twotabsearchtextbox";
+let searchDropDownIcon = '#nav-search div[class="nav-search-facade"]';
+let departmentOptionList =
+  '#nav-search [aria-describedby="searchDropdownDescription"]';
+let searchBtn = '#nav-search input[type="submit"]';
+
 module.exports = {
   // insert your locators and methods here
 
-  searchBarInputField: "#nav-search #twotabsearchtextbox",
-  searchDropDownIcon: '#nav-search div[class="nav-search-facade"]',
-  departmentOptionList:
-    '#nav-search [aria-describedby="searchDropdownDescription"]',
-  searchBtn: '#nav-search input[type="submit"]',
-
   selectDepartment: function (department) {
-    I.click(this.searchDropDownIcon);
-    I.selectOption(this.departmentOptionList, department);
-    I.seeTextEquals(department, this.searchDropDownIcon);
+    I.click(searchDropDownIcon);
+    I.selectOption(departmentOptionList, department);
+    I.seeTextEquals(department, searchDropDownIcon);
   },
 
   inputKeyword: function (keyword) {
-    I.clearField(this.searchBarInputField)
-    I.fillField(this.searchBarInputField, keyword);
+    I.clearField(searchBarInputField);
+    I.fillField(searchBarInputField, keyword);
   },
 
   submit: function () {
-    I.click(this.searchBtn);
+    I.click(searchBtn);
   },
 };

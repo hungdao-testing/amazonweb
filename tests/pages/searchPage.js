@@ -1,15 +1,16 @@
 const { I, searchBoxFrag, sortOptionFrag, filterOptionFrag } = inject();
 
+let paginationBar = '//ul[@class="a-pagination"]';
+let pageNumberToGo =
+  '//ul[@class="a-pagination"]//li[@class="a-normal"]//a[text()="<number>"]';
+let pageSelected =
+  '//ul[@class="a-pagination"]//li[@class="a-selected"]//a[text()="<number>"]';
+let lastPageIndex =
+  '(//ul[@class="a-pagination"]//li[@class = "a-disabled"])[last()]';
+let searchedResultItems = '[data-component-type="s-search-result"]';
+
 module.exports = {
   // insert your locators and methods here
-  paginationBar: '//ul[@class="a-pagination"]',
-  pageNumberToGo:
-    '//ul[@class="a-pagination"]//li[@class="a-normal"]//a[text()="<number>"]',
-  pageSelected:
-    '//ul[@class="a-pagination"]//li[@class="a-selected"]//a[text()="<number>"]',
-  lastPageIndex:
-    '(//ul[@class="a-pagination"]//li[@class = "a-disabled"])[last()]',
-  searchedResultItems: '[data-component-type="s-search-result"]',
 
   searchFor: function (keyword, department) {
     searchBoxFrag.inputKeyword(keyword);
@@ -38,26 +39,33 @@ module.exports = {
   },
 
   countItemPerPage: async function () {
-    return await I.grabNumberOfVisibleElements(this.searchedResultItems);
+    return await I.grabNumberOfVisibleElements(searchedResultItems);
   },
 
-  navigateToPage: function (pageNumber) {
+  navigateToPageByClickingPagination: function (pageNumber) {
     if (!this.isPaginationEnabled()) {
       return;
     }
-    let pageIndex = this.pageNumberToGo.replace("<number>", pageNumber);
-    let pageSelected = this.pageSelected.replace("<number>", pageNumber);
+    let pageIndex = pageNumberToGo.replace("<number>", pageNumber);
+    let pageSelectedNew = pageSelected.replace("<number>", pageNumber);
     I.click(pageIndex);
-    I.waitForElement(pageSelected);
+    I.waitForElement(pageSelectedNew);
   },
-
+  navigateToPageByUrl: async function (pageNumber) {
+    let currentUrl = await I.grabCurrentUrl();
+    let pageUrl = currentUrl.replace(/(&page=\d{1})/, `&page=${pageNumber}`);
+    pageUrl = pageUrl.replace(/(&ref=sr_pg_\d{1})/, `&ref=sr_pg_${pageNumber}`);
+    let pageSelectedNew = pageSelected.replace("<number>", pageNumber);
+    I.amOnPage(pageUrl);
+    I.waitForElement(pageSelectedNew);
+  },
   getNumberPageIndexs: async function () {
-    let totalPages = await I.grabTextFrom(this.lastPageIndex);
+    let totalPages = await I.grabTextFrom(lastPageIndex);
     return totalPages * 1; // convert to number;
   },
 
   isPaginationEnabled: async function () {
-    let numEl = await I.grabNumberOfVisibleElements(this.paginationBar);
+    let numEl = await I.grabNumberOfVisibleElements(paginationBar);
     if (numEl == 0) {
       I.say("No pagination");
       return false;

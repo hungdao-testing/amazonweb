@@ -1,0 +1,10 @@
+{
+  "keyword": "apple",
+  "department": "Books",
+  "filter": [
+    {
+      "Book Language": ["English"]
+    }
+  ],
+  "sortBy": "Publication Date"
+}

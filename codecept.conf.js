@@ -1,5 +1,5 @@
 const { setHeadlessWhen } = require("@codeceptjs/configure");
-
+const dotenv = require("dotenv").config();
 // turn on headless mode when running with HEADLESS=true environment variable
 // HEADLESS=true npx codecept run
 setHeadlessWhen(process.env.HEADLESS);
@@ -14,20 +14,10 @@ exports.config = {
       windowSize: "1200x900",
       waitForNavigation: ["domcontentloaded", "networkidle0"],
       waitForTimeout: 5000,
-      pressKeyDelay: 30,
+      chrome: {
+        args: ["--incognito"],
+      },
     },
-    // WebDriver: {
-    //   url: "https://www.amazon.com",
-    //   browser: "chrome",
-    //   restart: false,
-    //   smartWait: 5000,
-    //   windowSize: "1920x1680",
-    //   desiredCapabilities: {
-    //     chromeOptions: {
-    //       args: [/*"--headless",*/ "--disable-gpu", "--no-sandbox"],
-    //     },
-    //   },
-    // },
     ChaiWrapper: {
       require: "codeceptjs-chai",
     },
@@ -57,9 +47,5 @@ exports.config = {
     screenshotOnFail: {
       enabled: true,
     },
-    // wdio: {
-    //   enabled: true,
-    //   services: ["selenium-standalone"],
-    // },
   },
 };
