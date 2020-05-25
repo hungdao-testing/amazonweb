@@ -68,7 +68,7 @@ List all scenarios are being covered in the framework
 2. Precondition to run test cases.
    - Input account information in .env file (email, password)
 
-* Notes: in `.env` file, set `HEADLESS=` if you want to run in UI mode
+* Notes: in `.env` file, remove `HEADLESS=` if you want to run in UI mode
 
 ### [F. How to run and generate report](#f-how-to-run-and-generate-report)
 - Type:  `npm run test` to run all tests under folder `./tests/specs`
