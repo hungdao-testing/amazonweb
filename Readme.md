@@ -10,17 +10,17 @@ List of available helpers: WebDriver, Protractor, Puppeteer, Playwright, Nightma
 #### 1. Business Requirements:
 1.1. Login with valid account
 
-- [Issue] Due to the security reason, Amazon forces customer provide OTP code once logging. Besides, we don't know which accounts should be used by your site to check the script, so we could not access to which email to grab OTP. 
+- [:exclamation:Issue] :exclaimation: Due to the security reason, Amazon forces customer provide OTP code once logging. Besides, we don't know which accounts should be used by your site to check the script, so we could not access to which email to grab OTP. 
 
-- [Solution] As the context of test, I would like to propose a temporary solution that is "displaying OTP screen" means user logs in successfully. In the future, we will enable Email API service (like Gmail API) to crawl inbox.
+- [:white_check_mark:Solution] As the context of test, I would like to propose a temporary solution that is "displaying OTP screen" means user logs in successfully. In the future, we will enable Email API service (like Gmail API) to crawl inbox.
   
 1.2. Login with invalid account
 
-- [Analysis] no email, no password, invalid credential.
+- [:mag:Analysis] no email, no password, invalid credential.
   
 1.3. Search a book with keyword "apple" and language "en", and verify each pags in search result returns 16 items.
 
-- [Analysis] To verify each pages return 16 items exactly: grab items in first page, second page and last pages. If the number of items in 3 pages are 16, the test will be passed.
+- [:mag:Analysis] To verify each pages return 16 items exactly: grab items in first page, second page and last pages. If the number of items in 3 pages are 16, the test will be passed.
 
 
 1.4. Search a book with keyword "apple" and sort Publication date
@@ -65,6 +65,6 @@ List of available helpers: WebDriver, Protractor, Puppeteer, Playwright, Nightma
 - To generate report: type `npm run report:allure`
 
 #### [G. Sample Pictures]
-![Allure](Assests/allure.png)
+![Allure](Assets/allure.png)
 
 
