@@ -10,6 +10,11 @@ module.exports = function () {
     // Define custom steps here, use 'this' to access default methods of this.
     // It is recommended to place a general 'login' function here.
 
+    /**
+     * 
+     * @param {*} errorLoc Verify if there is error or not.
+     * Return true if have error.
+     */
     catchError: async function (errorLoc) {
       let errorNum = await this.grabNumberOfVisibleElements(errorLoc);
       if (errorNum > 0) {
@@ -18,6 +23,13 @@ module.exports = function () {
       return false;
     },
 
+    /**
+     * 
+     * @param {*} email Input email
+     * @param {*} password Input password
+     * 
+     * The login workflow including checking error.
+     */
     login: async function (email, password) {
       this.amOnPage("/");
       headerFrag.goToSignIn();

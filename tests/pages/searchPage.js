@@ -12,12 +12,21 @@ let searchedResultItems = '[data-component-type="s-search-result"]';
 module.exports = {
   // insert your locators and methods here
 
+  /**
+   * 
+   * @param {*} keyword  searched keyword (e.g. apple)
+   * @param {*} department searched department or category
+   */
   searchFor: function (keyword, department) {
     searchBoxFrag.inputKeyword(keyword);
     searchBoxFrag.selectDepartment(department);
     searchBoxFrag.submit();
   },
 
+  /**
+   * 
+   * @param {*} criteria list of criterias to filter, the sameple please access to /fixture/data
+   */
   filterByValues: function (criteria) {
     let leftFilterOpt = criteria.filter;
     leftFilterOpt.forEach((el) => {
@@ -28,6 +37,10 @@ module.exports = {
     });
   },
 
+  /**
+   * 
+   * @param {*} criteria criteria to sort, the sameple please access to /fixture/data
+   */
   sortByValue: function (criteria) {
     let sortByOpt = criteria.sortBy;
     sortOptionFrag.sortByOption(sortByOpt);
@@ -38,10 +51,17 @@ module.exports = {
     return keyWordInTitle;
   },
 
+  /**
+   * Count items on search result page
+   */
   countItemPerPage: async function () {
     return await I.grabNumberOfVisibleElements(searchedResultItems);
   },
 
+  /**
+   * 
+   * @param {*} pageNumber navigate to a page by clicing on a number in pagination
+   */
   navigateToPageByClickingPagination: function (pageNumber) {
     if (!this.isPaginationEnabled()) {
       return;
@@ -51,6 +71,11 @@ module.exports = {
     I.click(pageIndex);
     I.waitForElement(pageSelectedNew);
   },
+
+  /**
+   * 
+   * @param {*} pageNumber navigate to a page by directly accessing by URL
+   */
   navigateToPageByUrl: async function (pageNumber) {
     let currentUrl = await I.grabCurrentUrl();
     let pageUrl = currentUrl.replace(/(&page=\d{1})/, `&page=${pageNumber}`);
@@ -59,11 +84,18 @@ module.exports = {
     I.amOnPage(pageUrl);
     I.waitForElement(pageSelectedNew);
   },
+
+  /**
+   * Count the number of indexes in pagination
+   */
   getNumberPageIndexs: async function () {
     let totalPages = await I.grabTextFrom(lastPageIndex);
     return totalPages * 1; // convert to number;
   },
 
+  /**
+   * Check the result page has pagination
+   */
   isPaginationEnabled: async function () {
     let numEl = await I.grabNumberOfVisibleElements(paginationBar);
     if (numEl == 0) {

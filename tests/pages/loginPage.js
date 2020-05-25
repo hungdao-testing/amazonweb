@@ -10,12 +10,20 @@ let otpField = 'input[name="code"]';
 module.exports = {
   // insert your locators and methods here
 
+  /**
+   * 
+   * @param {*} email Input email
+   */
   inputEmail: function (email) {
     I.seeInTitle(pageTitleTxt);
     I.fillField(emailField, email);
     I.click(continueBtn);
   },
 
+  /**
+   * 
+   * @param {*} pwd input password
+   */
   inputPassword: function (pwd) {
     I.fillField(pwdField, secret(pwd));
     I.click(signInBtn);
