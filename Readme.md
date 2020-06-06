@@ -21,7 +21,7 @@ List all scenarios are being covered in the framework
 
 1. Login with valid account
 
-- [:exclamation:Issue] Due to the security reason, Amazon forces customer provide OTP code once logging. Besides, we don't know which accounts should be used to run the script, so we could not access to email to catch OTP. 
+- [:exclamation:Issue] Due to the security reason, Amazon forces customer provide OTP code once logging. Besides, we don't know which accounts should be used to run the script, so we could not access to email to catch OTP. (On-going fixing this issue)
 
 - [:white_check_mark:Solution] As the context of test, I would like to propose a temporary solution that is "displaying OTP screen" means user logs in successfully. In the future, we will enable Email API service (like Gmail API) to crawl inbox.
   
