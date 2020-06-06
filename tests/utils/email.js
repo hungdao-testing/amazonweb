@@ -2,18 +2,11 @@ const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
 
-const TOKEN_PATH = "token.json";
+const TOKEN_PATH = `${process.cwd()}/credentials/token.json`;
 const credentialPath = `${process.cwd()}/credentials/client_secret.json`;
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];
-
-// Load client secrets from a local file.
-fs.readFile(credentialPath, (err, content) => {
-  if (err) return console.log("Error loading client secret file:", err);
-  // Authorize a client with credentials, then call the Gmail API.
-  authorize(JSON.parse(content), listLabels);
-});
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -21,7 +14,7 @@ fs.readFile(credentialPath, (err, content) => {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback) {
+const authorize = (credentials) => {
   const { client_secret, client_id, redirect_uris } = credentials.web;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -30,12 +23,14 @@ function authorize(credentials, callback) {
   );
 
   // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client, callback);
-    oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
+  return new Promise((resolve, reject) => {
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getNewToken(oAuth2Client, callback);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      resolve(oAuth2Client);
+    });
   });
-}
+};
 
 /**
  * Get and store new token after prompting for user authorization, and then
@@ -68,29 +63,46 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
+
 /**
- * Lists the labels in the user's account.
+ * Get the recent email from your Gmail account
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function listLabels(auth) {
+function getRecentEmail(auth) {
   const gmail = google.gmail({ version: "v1", auth });
-  gmail.users.labels.list(
-    {
-      userId: "me",
-    },
-    (err, res) => {
-      if (err) return console.log("The API returned an error: " + err);
-      const labels = res.data.labels;
-      if (labels.length) {
-        console.log("Labels:");
-        labels.forEach((label) => {
-          console.log(`- ${label.name}`);
-        });
-      } else {
-        console.log("No labels found.");
+  return new Promise((resolve, reject) => {
+    gmail.users.messages.list(
+      { auth: auth, userId: "me", maxResults: 1, labelIds: ["INBOX"] },
+      (err, response) => {
+        if (err) reject("The API returned an error: " + err);
+
+        // Get the message id which we will need to retreive tha actual message next.
+        let message_id = response["data"]["messages"][0]["id"];
+        gmail.users.messages.get(
+          { auth: auth, userId: "me", id: message_id },
+          function (err, response) {
+            if (err) {
+              return reject("The API returned an error: " + err);
+            }
+            resolve(response["data"].snippet);
+          }
+        );
       }
-    }
-  );
+    );
+  });
 }
-// [END gmail_quickstart]
+
+/**
+ * Get OTP token
+ */
+exports.getOTPToken = async function (){
+  const cred = JSON.parse(fs.readFileSync(credentialPath, "utf-8"));
+  const auth = await authorize(cred).catch(e => console('Cannot authorization because of: ', e));
+  let otpEmail = await getRecentEmail(auth).catch(e => console.log('Cannot read email because of: ', e));
+  let otpCode = otpEmail.match(
+    /(One Time Password \(OTP\):)(.\d{6})/
+  )[2].trim();
+
+  return otpCode
+}
