@@ -4,11 +4,10 @@ Before((I) => {
   I.clearCookie();
 });
 
-Scenario(
+Scenario.only(
   "Verify user could login to system with valid credentials",
   async (I) => {
     await I.login(process.env.email, process.env.pwd);
-    I.seeTextEquals("Authentication required", "h1"); //temporarily, could not handle get OTP from email
   }
 ).tag("@valid");
 
