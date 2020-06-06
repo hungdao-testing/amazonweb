@@ -4,6 +4,7 @@ const { loginPage, headerFrag } = inject();
 let emailErrorLoc = "#auth-email-missing-alert";
 let pwdErrorLoc = "#auth-password-missing-alert";
 let credentialErrorLoc = "#auth-warning-message-box";
+let otpErrorLoc = 'a-alert-content'
 
 module.exports = function () {
   return actor({
@@ -25,14 +26,16 @@ module.exports = function () {
 
     /**
      * 
-     * @param {*} email Input email
-     * @param {*} password Input password
+     * @param {String} email Input email
+     * @param {String} password Input password
      * 
      * The login workflow including checking error.
      */
     login: async function (email, password) {
       this.amOnPage("/");
       headerFrag.goToSignIn();
+
+      //Login screen
       loginPage.inputEmail(email);
       let isEmailError = await this.catchError(emailErrorLoc);
       if (isEmailError) {
@@ -43,6 +46,8 @@ module.exports = function () {
         this.say("Forgot entering password");
         return true;
       }
+
+      //Password screen
       loginPage.inputPassword(password);
       this.waitForNavigation();
       let isCredentialError = await this.catchError(credentialErrorLoc);
@@ -50,6 +55,15 @@ module.exports = function () {
         this.say("Your input credential is wrong");
         return isCredentialError;
       }
+      
+      //OTP screen
+      await this.inputToken();
+      let isOTPError = await this.catchError(otpErrorLoc);
+      if(isOTPError){
+        this.say("Something went wrong with your OTP");
+        return isOTPError;
+      }
+      pause()
     },
   });
 };
