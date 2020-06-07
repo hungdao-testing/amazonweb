@@ -64,8 +64,7 @@ module.exports = function () {
         return isOTPError;
       }
       //Home screen
-      loginPage.verifyLoginSuccessfully()
-      pause()
+      loginPage.verifyLoginSuccessfully();
     },
   });
 };
