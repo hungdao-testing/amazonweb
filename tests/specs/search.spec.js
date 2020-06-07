@@ -1,12 +1,13 @@
 const fileManager = require("../utils/fileManage");
 Feature("Search").tag("@search");
 
+let data = fileManager.fetchDataFile("valid_search.json");
+
 Before((I, searchPage) => {
   I.amOnPage("/");
   searchPage.searchFor(data.keyword, data.department);
 });
 
-let data = fileManager.fetchDataFile("valid_search.json");
 
 Scenario(
   "Verify the number of item on each page is 16",
