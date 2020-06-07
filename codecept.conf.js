@@ -16,7 +16,13 @@ exports.config = {
       waitForNavigation: ["domcontentloaded", "networkidle0"],
       waitForTimeout: 5000,
       chrome: {
-        args: ["--incognito", '--disable-extensions', '--disable-gpu'],
+        args: [
+          "--incognito",
+          "--disable-extensions",
+          "--disable-gpu",
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+        ],
       },
     },
     ChaiWrapper: {
@@ -36,6 +42,11 @@ exports.config = {
   bootstrap: "./run_server.js",
   mocha: {},
   name: "amazon",
+  multiple: {
+    parallel: {
+      chunks: 2,
+    },
+  },
   plugins: {
     retryFailedStep: {
       enabled: true,
@@ -54,6 +65,6 @@ exports.config = {
       // run 4 times until 1st success
       minSuccess: 1,
       maxReruns: 3,
-    }
+    },
   },
 };

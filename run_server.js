@@ -14,7 +14,7 @@ module.exports = {
         console.log("Deleted output folder!");
       });
     }
-    fs.mkdirSync(`${outputPath}`);
+    //fs.mkdirSync(`${outputPath}`);
     done();
   },
 };
