@@ -67,6 +67,7 @@ function getNewToken(oAuth2Client, callback) {
  * Get the recent email from your Gmail account
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ * @param {String}  queryString   Searched string to find an email
  */
 function getRecentEmail(auth, queryString) {
   const gmail = google.gmail({ version: "v1", auth });
