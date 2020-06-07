@@ -21,11 +21,13 @@ List all scenarios are being covered in the framework
 
 1. Login with valid account
 
-- [:exclamation:Issue] Due to the security reason, Amazon forces customer provide OTP code once logging. Besides, we don't know which accounts should be used to run the script, so we could not access to email to catch OTP. (On-going fixing this issue)
+- [:mag:Analysis]  Due to the security reason, Amazon forces customer provide OTP code once logging.
 
-- [:white_check_mark:Solution] As the context of test, I would like to propose a temporary solution that is "displaying OTP screen" means user logs in successfully. In the future, we will enable Email API service (like Gmail API) to crawl inbox.
+- [:white_check_mark:Solution] Writing Email API function to grab latest email from Amazon by query `'in:inbox from:account-update@amazon.com'`, then using regex to extract OTP code `(One Time Password \(OTP\):)(.\d{6})/`
   
-2. Login with invalid account
+  **Notes**: In this POC, I use Gmail as the main registration email to work with Amazon Web.
+
+1. Login with invalid account
 
 - [:mag:Analysis] no email, no password, invalid credential.
   
@@ -66,7 +68,7 @@ List all scenarios are being covered in the framework
    - Run command line `npm i` at the root of the folder
 
 2. Precondition to run test cases.
-   - Input account information in .env file (email, password)
+   - Input account information in `.env` file (email, password, name)
 
 * Notes: in `.env` file, remove `HEADLESS=` if you want to run in UI mode
 
@@ -76,6 +78,7 @@ List all scenarios are being covered in the framework
 - To generate report: type `npm run report:allure`
 
 ### [G. Sample Pictures](#g-sample-pictures)
-![Allure](Assets/allure.png)
+![Allure_error](Assets/allure_error.png)
+![Allure_success](Assets/allure_success.png)
 
 
