@@ -63,22 +63,33 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-
 /**
  * Get the recent email from your Gmail account
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function getRecentEmail(auth) {
+function getRecentEmail(auth, queryString) {
   const gmail = google.gmail({ version: "v1", auth });
   return new Promise((resolve, reject) => {
     gmail.users.messages.list(
-      { auth: auth, userId: "me", maxResults: 1, labelIds: ["INBOX"] },
+      {
+        auth: auth,
+        userId: "me",
+        maxResults: 1,
+        labelIds: ["INBOX"],
+        q: queryString,
+
+      },
       (err, response) => {
         if (err) reject("The API returned an error: " + err);
 
         // Get the message id which we will need to retreive tha actual message next.
-        let message_id = response["data"]["messages"][0]["id"];
+        let message_id;
+        try {
+          message_id = response["data"]["messages"][0]["id"];
+        } catch (error) {
+          throw error;
+        }
         gmail.users.messages.get(
           { auth: auth, userId: "me", id: message_id },
           function (err, response) {
@@ -94,15 +105,21 @@ function getRecentEmail(auth) {
 }
 
 /**
- * Get OTP token
+ * Query latest email from 'from: account-update@amazon.com' and get OTP code
  */
-exports.getOTPToken = async function (){
+exports.getOTPToken = async function () {
+  let queryString = "in:inbox from:account-update@amazon.com ";
   const cred = JSON.parse(fs.readFileSync(credentialPath, "utf-8"));
-  const auth = await authorize(cred).catch(e => console('Cannot authorization because of: ', e));
-  let otpEmail = await getRecentEmail(auth).catch(e => console.log('Cannot read email because of: ', e));
-  let otpCode = otpEmail.match(
-    /(One Time Password \(OTP\):)(.\d{6})/
-  )[2].trim();
+  const auth = await authorize(cred).catch((e) =>
+    console("Cannot authorization because of: ", e)
+  );
+  let otpEmail = await getRecentEmail(auth, queryString).catch((e) =>
+    console.log("Cannot read email because of: ", e)
+  );
+  console.log("OTP Email: ", otpEmail);
+  let otpCode = otpEmail
+    .match(/(One Time Password \(OTP\):)(.\d{6})/)[2]
+    .trim();
 
-  return otpCode
-}
+  return otpCode;
+};

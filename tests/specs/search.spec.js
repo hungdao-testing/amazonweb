@@ -31,7 +31,7 @@ Scenario(
       I.assertEqual(iteminPageFinal, 16);
     }
   }
-).tag("@maxItem");
+).tag("@maxItem").tag("@smoke");
 
 Scenario(
   "Verify user could sort by 'Publication Date'",

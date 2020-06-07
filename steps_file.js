@@ -57,12 +57,14 @@ module.exports = function () {
       }
       
       //OTP screen
-      await this.inputToken();
+      await loginPage.inputToken();
       let isOTPError = await this.catchError(otpErrorLoc);
       if(isOTPError){
         this.say("Something went wrong with your OTP");
         return isOTPError;
       }
+      //Home screen
+      loginPage.verifyLoginSuccessfully()
       pause()
     },
   });

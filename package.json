@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx codeceptjs run",
+    "test: dryrun": "npx codeceptjs dry-run",
+    "test:smoke": "npx codeceptjs run --grep @smoke", 
     "report:allure": "./node_modules/allure-commandline/bin/allure serve output"
   },
   "author": "",

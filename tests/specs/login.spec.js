@@ -9,7 +9,7 @@ Scenario.only(
   async (I) => {
     await I.login(process.env.email, process.env.pwd);
   }
-).tag("@valid");
+).tag("@valid").tag("@smoke")
 
 let accounts = new DataTable(["email", "password", "case"]); //
 accounts.add(["", "123456", "Don't enter email"]); // adding records to a table
