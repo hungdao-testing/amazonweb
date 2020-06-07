@@ -63,7 +63,7 @@ module.exports = function () {
         this.say("Something went wrong with your OTP");
         return isOTPError;
       }
-      //Home screen
+      //Verify Login successfully.
       loginPage.verifyLoginSuccessfully();
     },
   });

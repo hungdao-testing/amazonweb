@@ -75,30 +75,27 @@ function getRecentEmail(auth, queryString) {
       {
         auth: auth,
         userId: "me",
-        maxResults: 1,
-        labelIds: ["INBOX"],
         q: queryString,
 
       },
       (err, response) => {
-        if (err) reject("The API returned an error: " + err);
-
         // Get the message id which we will need to retreive tha actual message next.
-        let message_id;
         try {
-          message_id = response["data"]["messages"][0]["id"];
-        } catch (error) {
-          throw error;
-        }
-        gmail.users.messages.get(
-          { auth: auth, userId: "me", id: message_id },
-          function (err, response) {
-            if (err) {
-              return reject("The API returned an error: " + err);
+          if (err) reject("The API returned an error: " + err);
+          let message_id = response["data"]["messages"][0]["id"];
+          gmail.users.messages.get(
+            { auth: auth, userId: "me", id: message_id },
+            function (err, response) {
+              if (err) {
+                return reject("The API returned an error: " + err);
+              }
+              resolve(response["data"].snippet);
             }
-            resolve(response["data"].snippet);
-          }
-        );
+          );
+        } catch (error) {
+          console.log('Could not get OTP: ', error);
+        }
+        
       }
     );
   });

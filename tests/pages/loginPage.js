@@ -43,7 +43,7 @@ module.exports = {
     //Go to OTP screen
     //1. to handle TimeOut exception: it's better to sleep in 2s
     I.wait(2) 
-    let token = await gmail.getOTPToken();
+    let token = await gmail.getOTPToken()
     //2. Enter OTP
     I.fillField(otpField, token);
     I.click(continueOTPBtn)
@@ -53,7 +53,7 @@ module.exports = {
    * Assertion user logs-in to AWS successfully
    */
   verifyLoginSuccessfully: function(){
-    I.waitForVisible('#nav-logo');
+    //I.waitForVisible('#nav-logo');
     I.seeTextEquals(`Hello, ${process.env.name}`, signInSuccessTxtLoc)
   }
 };

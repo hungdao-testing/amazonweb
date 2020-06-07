@@ -13,7 +13,9 @@ exports.config = {
       url: "https://www.amazon.com",
       show: true,
       windowSize: "1200x900",
-      waitForNavigation: ["domcontentloaded"],
+      waitForNavigation: ["domcontentloaded", "networkidle0"],
+      //getPageTimeout: 15000,
+      //waitForAction: 200,
       waitForTimeout: 5000,
       chrome: {
         args: ["--incognito", '--disable-extensions', '--disable-gpu'],
