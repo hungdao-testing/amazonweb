@@ -4,7 +4,7 @@ Before((I) => {
   I.clearCookie();
 });
 
-Scenario.only(
+Scenario(
   "Verify user could login to system with valid credentials",
   async (I) => {
     await I.login(process.env.email, process.env.pwd);
