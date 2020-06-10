@@ -1,10 +1,14 @@
 // in this file you can append custom step methods to 'I' object
-const { loginPage, headerFrag } = inject();
+const { PageFactory } = inject();
 
 let emailErrorLoc = "#auth-email-missing-alert";
 let pwdErrorLoc = "#auth-password-missing-alert";
 let credentialErrorLoc = "#auth-warning-message-box";
 let otpErrorLoc = 'a-alert-content'
+
+let loginPage = PageFactory.getPage("loginPage");
+let headerFrag = PageFactory.getComponent("headerComp");
+
 
 module.exports = function () {
   return actor({
