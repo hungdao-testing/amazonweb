@@ -1,34 +1,38 @@
 const fileManager = require("../utils/fileManage");
+
+
 Feature("Search").tag("@search");
 
 let data = fileManager.fetchDataFile("valid_search.json");
+let page;
 
-Before((I, searchPage) => {
+Before((I, PageFactory) => {
+  page = PageFactory.getPage("searchPage");
   I.amOnPage("/");
-  searchPage.searchFor(data.keyword, data.department);
+  page.searchFor(data.keyword, data.department);
 });
 
 
 Scenario(
   "Verify the number of item on each page is 16",
-  async (I, searchPage) => {
-    let maxNumPages = await searchPage.getNumberPageIndexs();
+  async (I) => {
+    let maxNumPages = await page.getNumberPageIndexs();
 
     //Assert item in page_1
     I.say("Verify number of item is first page");
-    let iteminPageOne = await searchPage.countItemPerPage();
+    let iteminPageOne = await page.countItemPerPage();
     I.assertEqual(iteminPageOne, 16);
 
     if (maxNumPages >= 2) {
       I.say("Verify number of item in second page");
-      searchPage.navigateToPageByClickingPagination(2);
-      let iteminPageTwo = await searchPage.countItemPerPage();
+      page.navigateToPageByClickingPagination(2);
+      let iteminPageTwo = await page.countItemPerPage();
       I.assertEqual(iteminPageTwo, 16);
 
       //Go to final page and verify number of items in last page
       I.say("Verify number of item in last page");
-      searchPage.navigateToPageByUrl(maxNumPages);
-      let iteminPageFinal = await searchPage.countItemPerPage();
+      page.navigateToPageByUrl(maxNumPages);
+      let iteminPageFinal = await page.countItemPerPage();
       I.assertEqual(iteminPageFinal, 16);
     }
   }
@@ -36,7 +40,7 @@ Scenario(
 
 Scenario(
   "Verify user could sort by 'Publication Date'",
-  async (I, searchPage) => {
-    searchPage.sortByValue(data);
+  async () => {
+    page.sortByValue(data);
   }
 ).tag("@sort");
