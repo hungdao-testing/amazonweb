@@ -1,59 +1,65 @@
 const { I } = inject();
-const gmail = require('./../utils/email')
+const gmail = require("../utils/email");
+const BasePage = require("./basePage");
 
-let pageTitleTxt = "Amazon Sign-In";
-let emailField = "#ap_email";
-let pwdField = "#ap_password";
-let continueBtn = "span #continue";
-let continueOTPBtn = "#a-autoid-0-announce";
-let signInBtn = "#signInSubmit";
-let otpField = 'input[name="code"]';
-let signInSuccessTxtLoc = '#nav-tools [data-nav-role="signin"] div[class="nav-line-1-container"]'
+class LoginPage extends BasePage {
+  #pageTitleTxt = "Amazon Sign-In";
+  #emailField = "#ap_email";
+  #pwdField = "#ap_password";
+  #continueBtn = "span #continue";
+  #continueOTPBtn = "#a-autoid-0-announce";
+  #signInBtn = "#signInSubmit";
+  #otpField = 'input[name="code"]';
+  #signInSuccessTxtLoc = '#nav-tools [data-nav-role="signin"] div[class="nav-line-1-container"]';
 
-module.exports = {
-  // insert your locators and methods here
+
+  constructor(){
+    super();
+  };
 
   /**
-   * 
+   *
    * @param {*} email Input email
    */
-  inputEmail: function (email) {
-    I.seeInTitle(pageTitleTxt);
-    I.fillField(emailField, email);
-    I.click(continueBtn);
-  },
+  inputEmail (email) {
+    I.seeInTitle(super.getSelector(this.#pageTitleTxt));
+    I.fillField(super.getSelector(this.#emailField), email);
+    I.click(super.getSelector(this.#continueBtn));
+  };
 
   /**
-   * 
+   *
    * @param {*} pwd input password
    */
-  inputPassword: function (pwd) {
-    I.fillField(pwdField, secret(pwd));
-    I.click(signInBtn);
-  },
+  inputPassword (pwd) {
+    I.fillField(super.getSelector(this.#pwdField), secret(pwd));
+    I.click(super.getSelector(this.#signInBtn));
+  };
 
   /**
    * Input OTP code fetched from gmail
    */
-  inputToken: async function(){
+  async inputToken() {
     //Assert authentication required
     I.seeTextEquals("Authentication required", "h1");
-    I.click(continueBtn);
+    I.click(super.getSelector(this.#continueBtn));
 
     //Go to OTP screen
     //1. to handle TimeOut exception: it's better to sleep in 2s
-    I.wait(2) 
-    let token = await gmail.getOTPToken()
+    I.wait(2);
+    let token = await gmail.getOTPToken();
     //2. Enter OTP
-    I.fillField(otpField, token);
-    I.click(continueOTPBtn)
-  },
+    I.fillField(super.getSelector(this.#otpField), token);
+    I.click(super.getSelector(this.#continueOTPBtn));
+  };
 
   /**
    * Assertion user logs-in to AWS successfully
    */
-  verifyLoginSuccessfully: function(){
+  verifyLoginSuccessfully() {
     //I.waitForVisible('#nav-logo');
-    I.seeTextEquals(`Hello, ${process.env.name}`, signInSuccessTxtLoc)
-  }
-};
+    I.seeTextEquals(`Hello, ${process.env.name}`, super.getSelector(this.#signInSuccessTxtLoc));
+  };
+}
+
+module.exports = LoginPage;

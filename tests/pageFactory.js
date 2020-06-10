@@ -1,7 +1,6 @@
 class PageFactory{
 
   getPage(pageName) {
-    console.log("PageFactory: Go to getPage() function");
     switch (pageName) {
       case "loginPage":
         const LoginPage = require("./pages/loginPage");

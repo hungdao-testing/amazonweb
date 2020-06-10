@@ -1,5 +1,3 @@
-// const PageFactory = require('./../pageFactory');
-
 class BasePage{
 
     gotoPage(url){
@@ -9,6 +7,10 @@ class BasePage{
     isAt(url){
         I.seeInCurrentUrl(url);
     };
+
+    getSelector(loc){
+        return loc;
+    }
 
 }
 

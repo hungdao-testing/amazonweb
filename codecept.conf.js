@@ -1,4 +1,5 @@
 const { setHeadlessWhen } = require("@codeceptjs/configure");
+const dotenv = require('dotenv').config();
 
 // turn on headless mode when running with HEADLESS=true environment variable
 // HEADLESS=true npx codecept run
@@ -31,12 +32,7 @@ exports.config = {
   },
   include: {
     I: "./steps_file.js",
-    PageFactory: "./tests/pageFactory.js",
-    searchBoxFrag: "./tests/fragments/searchBox.js",
-    searchResultFrag: "./tests/fragments/searchResult.js",
-    filterOptionFrag: "./tests/fragments/filterOption.js",
-    sortOptionFrag: "./tests/fragments/sortOption.js",
-    headerFrag: "./tests/fragments/header.js",
+    PageFactory: "./tests/pageFactory.js", // factory pattern to handle pages and common components
   },
   bootstrap: "./run_server.js",
   mocha: {},

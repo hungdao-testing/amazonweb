@@ -1,19 +1,15 @@
 const { I, PageFactory } = inject();
 const BasePage = require("./basePage");
 
-let paginationBar = '//ul[@class="a-pagination"]';
-let pageNumberToGo =
-  '//ul[@class="a-pagination"]//li[@class="a-normal"]//a[text()="<number>"]';
-let pageSelected =
-  '//ul[@class="a-pagination"]//li[@class="a-selected"]//a[text()="<number>"]';
-let lastPageIndex =
-  '(//ul[@class="a-pagination"]//li[@class = "a-disabled"])[last()]';
-let searchedResultItems = '[data-component-type="s-search-result"]';
+class SearchPage extends BasePage {
+  #paginationBar = '//ul[@class="a-pagination"]';
+  #pageNumberToGo = '//ul[@class="a-pagination"]//li[@class="a-normal"]//a[text()="<number>"]';
+  #pageSelected = '//ul[@class="a-pagination"]//li[@class="a-selected"]//a[text()="<number>"]';
+  #lastPageIndex = '(//ul[@class="a-pagination"]//li[@class = "a-disabled"])[last()]';
+  #searchedResultItems = '[data-component-type="s-search-result"]';
 
-
-class SearchPage extends BasePage{
   constructor() {
-    super()
+    super();
     this.searchBox = PageFactory.getComponent("searchComp");
     this.filterOpt = PageFactory.getComponent("filterComp");
     this.sortOpt = PageFactory.getComponent("sortComp");
@@ -37,8 +33,12 @@ class SearchPage extends BasePage{
     if (!this.isPaginationEnabled()) {
       return;
     }
-    let pageIndex = pageNumberToGo.replace("<number>", pageNumber);
-    let pageSelectedNew = pageSelected.replace("<number>", pageNumber);
+    let pageIndex = super
+      .getSelector(this.#pageNumberToGo)
+      .replace("<number>", pageNumber);
+    let pageSelectedNew = super
+      .getSelector(this.#pageSelected)
+      .replace("<number>", pageNumber);
     I.click(pageIndex);
     I.waitForElement(pageSelectedNew);
   }
@@ -51,7 +51,9 @@ class SearchPage extends BasePage{
     let currentUrl = await I.grabCurrentUrl();
     let pageUrl = currentUrl.replace(/(&page=\d{1})/, `&page=${pageNumber}`);
     pageUrl = pageUrl.replace(/(&ref=sr_pg_\d{1})/, `&ref=sr_pg_${pageNumber}`);
-    let pageSelectedNew = pageSelected.replace("<number>", pageNumber);
+    let pageSelectedNew = super
+      .getSelector(this.#pageSelected)
+      .replace("<number>", pageNumber);
     I.amOnPage(pageUrl);
     I.waitForElement(pageSelectedNew);
   }
@@ -82,14 +84,18 @@ class SearchPage extends BasePage{
    * Count items on search result page
    */
   async countItemPerPage() {
-    return await I.grabNumberOfVisibleElements(searchedResultItems);
+    return await I.grabNumberOfVisibleElements(
+      super.getSelector(this.#searchedResultItems)
+    );
   }
 
   /**
    * Count the number of indexes in pagination
    */
   async getNumberPageIndexs() {
-    let totalPages = await I.grabTextFrom(lastPageIndex);
+    let totalPages = await I.grabTextFrom(
+      super.getSelector(this.#lastPageIndex)
+    );
     return totalPages * 1; // convert to number;
   }
 
@@ -97,7 +103,9 @@ class SearchPage extends BasePage{
    * Check the result page has pagination
    */
   async isPaginationEnabled() {
-    let numEl = await I.grabNumberOfVisibleElements(paginationBar);
+    let numEl = await I.grabNumberOfVisibleElements(
+      super.getSelector(this.#paginationBar)
+    );
     if (numEl == 0) {
       I.say("No pagination");
       return false;
@@ -105,6 +113,6 @@ class SearchPage extends BasePage{
     I.say("There is pagination");
     return true;
   }
-};
+}
 
 module.exports = SearchPage;
