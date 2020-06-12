@@ -27,7 +27,7 @@ List all scenarios are being covered in the framework
   
   **Notes**: In this POC, I use Gmail as the main registration email to work with Amazon Web.
 
-1. Login with invalid account
+2. Login with invalid account
 
 - [:mag:Analysis] no email, no password, invalid credential.
   
