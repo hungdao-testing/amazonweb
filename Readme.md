@@ -40,7 +40,13 @@ List all scenarios are being covered in the framework
 
 
 ### [C. Technical Information](#c-technical-information)
-- The configuration of framework is placed in `codecept.conf.js`, to learn more details, visit: [configuration](https://codecept.io/configuration/)
+- The configuration of framework is placed in `./configs` folder, to learn more details, visit: [configuration](https://codecept.io/configuration/)
+  - `codecept_shared.js` common configuration.
+  - `puppeteer.conf.js` puppeteer configuration
+  - `webdriver.conf.js` webdriverio configuration
+
+  ** Notes: To run specific configuration above, passing `-c ./configs/<name_configuration>` 
+
 - The data files are placed under `/fixtures/data`
 - Apply [Puppeteer](https://codecept.io/helpers/Puppeteer/#puppeteer) as the main browser execution
 - Apply [Page Object pattern](https://codecept.io/pageobjects/#pageobject) to construct the pages.
