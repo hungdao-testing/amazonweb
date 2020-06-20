@@ -8,6 +8,7 @@ module.exports = {
   // insert your locators and methods here
 
   sortByOption: async function (option) {
+    I.waitForClickable(sortDropDown);
     I.click(sortDropDown);
     I.moveCursorTo(filterOption);
     I.click(`${filterOption}[text()='${option}']`);

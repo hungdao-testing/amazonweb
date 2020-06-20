@@ -6,10 +6,10 @@ Feature("Search").tag("@search");
 let data = fileManager.fetchDataFile("valid_search.json");
 let page;
 
-Before((I, PageFactory) => {
+Before(async (I, PageFactory) => {
   page = PageFactory.getPage("searchPage");
   I.amOnPage("/");
-  page.searchFor(data.keyword, data.department);
+  await page.searchFor(data.keyword, data.department);
 });
 
 

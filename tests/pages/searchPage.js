@@ -19,9 +19,9 @@ class SearchPage extends BasePage {
    * @param {*} keyword  searched keyword (e.g. apple)
    * @param {*} department searched department or category
    */
-  searchFor(keyword, department) {
+  async searchFor(keyword, department) {
+    await this.searchBox.selectDepartment(department);
     this.searchBox.inputKeyword(keyword);
-    this.searchBox.selectDepartment(department);
     this.searchBox.submit();
   }
 
@@ -39,6 +39,8 @@ class SearchPage extends BasePage {
     let pageSelectedNew = super
       .getSelector(this.#pageSelected)
       .replace("<number>", pageNumber);
+    
+    I.waitForClickable(pageIndex)
     I.click(pageIndex);
     I.waitForElement(pageSelectedNew);
   }

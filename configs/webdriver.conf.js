@@ -8,7 +8,7 @@ const sharedConfig = require("./codecept_shared.js");
 //setHeadlessWhen(process.env.HEADLESS);
 let helpers = {
   WebDriver: {
-    browser: "firefox",
+    browser: "chrome",
     url: "https://www.amazon.com",
     restart: false,
     show: true,
