@@ -51,7 +51,7 @@ List all scenarios are being covered in the framework
 - Apply [Puppeteer](https://codecept.io/helpers/Puppeteer/#puppeteer) as the main browser execution
 - Apply [Page Object pattern](https://codecept.io/pageobjects/#pageobject) to construct the pages.
 - Apply [Page fragment](https://codecept.io/pageobjects/#page-fragments) to gather all autonomous parts of a page, like modal boxes, components, widgets.
-- Apply Page Factory design pattern to control page objects and page fragment (`./tests/pageFactory.js`)
+- Apply [Page Factory design pattern](https://www.youtube.com/watch?v=kuirGzhGhyw) to control page objects and page fragment (`./tests/pageFactory.js`)
 - Apply [Data-driven](https://codecept.io/advanced/#data-driven-tests) for invalid login scenario
 - Apply [Allure report](https://codecept.io/reports/#allure) to generate report under `output`
   
