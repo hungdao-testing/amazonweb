@@ -36,11 +36,11 @@ Scenario(
       I.assertEqual(iteminPageFinal, 16);
     }
   }
-).tag("@maxItem").tag("@smoke");
+).tag("@maxItem").tag("@regression").tag("@search");
 
 Scenario(
   "Verify user could sort by 'Publication Date'",
   async () => {
     page.sortByValue(data);
   }
-).tag("@sort");
+).tag("@sort").tag("@smoke");

@@ -12,8 +12,18 @@ let config = {
   mocha: {},
   name: "amazon",
   multiple: {
-    parallel: {
-      chunks: 2,
+    regression: {
+      chunks: 2, //Issue: https://github.com/codecept-js/CodeceptJS/issues/2462
+      browsers: ["chrome", "firefox"],
+      
+      grep: "@regression",
+      outputName: "regression",
+    },
+    smoke: {
+      // run all tests in chrome and firefox
+      browsers: ["chrome"],
+      grep: "@smoke",
+      outputName: "smoke-chrome",
     },
   },
   plugins: {
@@ -38,4 +48,4 @@ let config = {
   },
 };
 
-module.exports = config
+module.exports = config;

@@ -4,12 +4,12 @@ Before((I) => {
   I.clearCookie();
 });
 
-Scenario(
+Scenario.skip(
   "Verify user could login to system with valid credentials",
   async (I) => {
     await I.login(process.env.email, process.env.pwd);
   }
-).tag("@valid").tag("@smoke")
+).tag("@valid").tag("@smoke").tag("@login")
 
 let accounts = new DataTable(["email", "password", "case"]); //
 accounts.add(["", "123456", "Don't enter email"]); // adding records to a table
@@ -21,4 +21,4 @@ Data(accounts)
     let isError = await I.login(current.email, current.password);
     I.assertEqual(isError, true);
   })
-  .tag("@invalid");
+  .tag("@invalid").tag("@regression").tag("@login");

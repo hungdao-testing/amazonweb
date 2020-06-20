@@ -5,7 +5,7 @@ const sharedConfig = require("./codecept_shared.js");
 // turn on headless mode when running with HEADLESS=true environment variable
 // HEADLESS=true npx codecept run
 
-//setHeadlessWhen(process.env.HEADLESS);
+setHeadlessWhen(process.env.HEADLESS);
 let helpers = {
   WebDriver: {
     browser: "chrome",
