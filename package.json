@@ -6,8 +6,8 @@
   "scripts": {
     "test": "npx codeceptjs run",
     "test:dryrun": "npx codeceptjs dry-run",
-    "test:smoke": "npx codeceptjs run --grep @smoke",
-    "test:parallel": "npx codeceptjs run-multiple parallel",
+    "test:regression": "npx codeceptjs run-multiple parallel -c ./configs/webdriver.conf.js",
+    "test:smoke": "npx codeceptjs run-multiple smoke -c ./configs/webdriver.conf.js",
     "report:allure": "./node_modules/allure-commandline/bin/allure serve output"
   },
   "author": "",
