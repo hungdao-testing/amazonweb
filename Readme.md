@@ -76,6 +76,8 @@ List all scenarios are being covered in the framework
 ### [F. How to run and generate report](#f-how-to-run-and-generate-report)
 - Type:  `npm run test` to run all tests under folder `./tests/specs`
 - Type:  `npx codeceptjs run ./tests/specs/<filename>.spec.js` to run a specific script
+- Type:  `npm run test:smoke` to run scenarios marking tag `@smoke` which is highest-priority scenarios running in Chrome only.
+- Type:  `npm run test: regression` to run scenarions marking tag `@regression`, this commands issues parallel-execution running in both of Firefox and Chrome
 - To generate report: type `npm run report:allure`
 
 ### [G. Sample Pictures](#g-sample-pictures)
