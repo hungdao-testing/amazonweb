@@ -13,10 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@codeceptjs/ui": "^0.3.8",
+    "@codeceptjs/ui": "^0.4.6",
     "@wdio/selenium-standalone-service": "^5.11.2",
     "allure-commandline": "^2.13.0",
-    "codeceptjs": "3.0.4",
+    "codeceptjs": "^3.1.2",
     "codeceptjs-chai": "^1.1.1",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
